@@ -4,7 +4,7 @@
 ## Caltion Bot Rga
 
 
-Bienvenido a Caltion Bot Rga, un proyecto basado en Caltion Bot Rga: The Golden RAGtriever, una aplicación de código abierto de la comunidad diseñada para ofrecer una interfaz de extremo a extremo, optimizada y fácil de usar para la generación aumentada de recuperación (RAG). En este proyecto, hemos adaptado y personalizado la funcionalidad de Caltion Bot Rga para satisfacer nuestras necesidades específicas. Agradecemos a la comunidad de Weaviate por proporcionar la base sobre la cual construimos nuestro proyecto.
+Bienvenido a Caltion Bot Rga, un proyecto basado en Verba: The Golden RAGtriever, una aplicación de código abierto de la comunidad diseñada para ofrecer una interfaz de extremo a extremo, optimizada y fácil de usar para la generación aumentada de recuperación (RAG). En este proyecto, hemos adaptado y personalizado la funcionalidad de Caltion Bot Rga para satisfacer nuestras necesidades específicas. Agradecemos a la comunidad de Weaviate por proporcionar la base sobre la cual construimos nuestro proyecto.
 
 Caltion Bot Rga permite explorar conjuntos de datos y extraer información de manera eficiente, ya sea localmente utilizando herramientas como HuggingFace y Ollama, o mediante proveedores de LLM como OpenAI, Cohere y Google. Estamos comprometidos con el desarrollo y la mejora continua de esta aplicación para brindar una experiencia aún más completa y útil a nuestros usuarios.
 
@@ -12,7 +12,6 @@ Caltion Bot Rga permite explorar conjuntos de datos y extraer información de ma
 pip install goldenCaltion Bot Rga
 ```
 
-![Demostración de Caltion Bot Rga](https://github.com/weaviate/Caltion Bot Rga/blob/1.0.0/img/Caltion Bot Rga.gif)
 
 -[Caltion Bot Rga](#Caltion Bot Rga)
 -[🎯 ¿Qué es Caltion Bot Rga?](#que-es-Caltion Bot Rga)
@@ -39,42 +38,47 @@ Caltion Bot Rga es un asistente personal totalmente personalizable para consulta
 
 ## Listas de funciones
 
-| 🤖 Soporte de modelo | Implementado | Descripción |
-| --------------------------------- | ----------- | -------------------------------------------------- ----- |
-| Ollama (por ejemplo, Llama3) | ✅ | Modelos de Incrustación y Generación Local impulsados por Ollama |
-| HuggingFace (por ejemplo, MiniLMEmbedder) | ✅ | Modelos de incrustación local impulsados por HuggingFace |
-| Cohere (por ejemplo, Comando R+) | ✅ | Modelos de integración y generación de Cohere |
-| Google (por ejemplo, Géminis) | ✅ | Modelos de integración y generación de Google |
-| OpenAI (por ejemplo, GPT4) | ✅ | Modelos de integración y generación por OpenAI |
+### 🤖 Soporte de modelo
+| Modelo                               | Implementado | Descripción                                               |
+| ------------------------------------ | ------------ | --------------------------------------------------------- |
+| Ollama (por ejemplo, Llama3)         | ✅           | Modelos de Incrustación y Generación Local impulsados por Ollama |
+| HuggingFace (por ejemplo, MiniLMEmbedder) | ✅           | Modelos de incrustación local impulsados por HuggingFace |
+| Cohere (por ejemplo, Comando R+)     | ✅           | Modelos de integración y generación de Cohere            |
+| Google (por ejemplo, Géminis)        | ✅           | Modelos de integración y generación de Google            |
+| OpenAI (por ejemplo, GPT4)           | ✅           | Modelos de integración y generación por OpenAI           |
 
-| 📁 Soporte de datos | Implementado | Descripción |
-| ------------------ | ----------- | ---------------------------------- |
-| Ingestión de PDF | ✅ | Importar PDF a Caltion Bot Rga |
-| Ingestión de CSV/XLSX | ✅ | Importar datos de tablas a Caltion Bot Rga |
-| Multimodal | planeado ⏱️ | Importar datos multimodales a Caltion Bot Rga |
-| IO no estructurado | ✅ | Importar datos a través de no estructurados |
+### 📁 Soporte de datos
+| Tipo de Datos       | Implementado | Descripción                                        |
+| ------------------- | ------------ | -------------------------------------------------- |
+| Ingestión de PDF    | ✅           | Importar PDF a Caltion Bot Rga                     |
+| Ingestión de CSV/XLSX | ✅           | Importar datos de tablas a Caltion Bot Rga         |
+| Multimodal          | planeado ⏱️  | Importar datos multimodales a Caltion Bot Rga      |
+| IO no estructurado  | ✅           | Importar datos a través de no estructurados        |
 
-| ✨Características del RAG | Implementado | Descripción |
-| ----------------------- | ----------- | -------------------------------------------------- ----------------------- |
-| Búsqueda híbrida | ✅ | Búsqueda semántica combinada con búsqueda por palabras clave |
-| Almacenamiento en caché semántico | ✅ | Resultados guardados y recuperados según el significado semántico |
-| Sugerencia de autocompletar | ✅ | Caltion Bot Rga sugiere el autocompletado |
-| Filtrado | planeado ⏱️ | Aplique filtros (por ejemplo, documentos, tipos de documentos, etc.) antes de realizar RAG |
-| Consulta avanzada | planeado ⏱️ | Delegación de tareas basada en la evaluación LLM |
-| Reclasificación | planeado ⏱️ | Cambie la clasificación de los resultados según el contexto para obtener mejores resultados |
-| Evaluación del GAR | planeado ⏱️ | Interfaz para evaluar tuberías RAG |
-| Metadatos personalizables | planeado ⏱️ | Control gratuito sobre Metadatos |
+### ✨Características del RAG
+| Característica                     | Implementado | Descripción                                               |
+| ---------------------------------- | ------------ | --------------------------------------------------------- |
+| Búsqueda híbrida                   | ✅           | Búsqueda semántica combinada con búsqueda por palabras clave |
+| Almacenamiento en caché semántico  | ✅           | Resultados guardados y recuperados según el significado semántico |
+| Sugerencia de autocompletar        | ✅           | Caltion Bot Rga sugiere el autocompletado                |
+| Filtrado                           | planeado ⏱️  | Aplique filtros (por ejemplo, documentos, tipos de documentos, etc.) antes de realizar RAG |
+| Consulta avanzada                  | planeado ⏱️  | Delegación de tareas basada en la evaluación LLM         |
+| Reclasificación                   | planeado ⏱️   | Cambie la clasificación de los resultados según el contexto para obtener mejores resultados |
+| Evaluación del GAR                | planeado ⏱️   | Interfaz para evaluar tuberías RAG                       |
+| Metadatos personalizables         | planeado ⏱️   | Control gratuito sobre Metadatos                          |
 
-| 🆒 Bono genial | Implementado | Descripción |
-| --------------------- | ----------- | -------------------------------------------------- ----- |
-| Soporte de Docker | ✅ | Caltion Bot Rga se puede implementar a través de Docker |
-| Interfaz personalizable | ✅ | La interfaz de Caltion Bot Rga es totalmente personalizable a través de la interfaz |
+### 🆒 Bono genial
+| Característica              | Implementado | Descripción                                        |
+| --------------------------- | ------------ | -------------------------------------------------- |
+| Soporte de Docker           | ✅           | Caltion Bot Rga se puede implementar a través de Docker |
+| Interfaz personalizable     | ✅           | La interfaz de Caltion Bot Rga es totalmente personalizable a través de la interfaz |
 
-| 🤝 Bibliotecas RAG | Implementado | Descripción |
-| ---------------- | ----------- | ---------------------------------- |
-| Pajar | planeado ⏱️ | Implementar tuberías Haystack RAG |
-| LlamaIndice | planeado ⏱️ | Implementar oleoductos LlamaIndex RAG |
-| Cadena Lang | planeado ⏱️ | Implementar oleoductos LangChain RAG |
+### 🤝 Bibliotecas RAG
+| Biblioteca          | Implementado | Descripción                                |
+| ------------------- | ------------ | ------------------------------------------ |
+| Pajar               | planeado ⏱️  | Implementar tuberías Haystack RAG          |
+| LlamaIndice         | planeado ⏱️  | Implementar oleoductos LlamaIndex RAG      |
+| Cadena Lang         | planeado ⏱️  | Implementar oleoductos LangChain RAG       |
 
 
 ---
