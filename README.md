@@ -115,22 +115,21 @@ Antes de iniciar Caltion Bot Rga, deberá configurar el acceso a varios componen
 > Asegúrese de configurar solo las variables de entorno que desea utilizar; las variables de entorno con valores faltantes o incorrectos pueden provocar errores.
 
 A continuación se muestra una lista completa de las claves y variables API que puede necesitar:
-
-| Variable de entorno | Valor | Descripción |
-| ------------------------------ | -------------------------------------------------- -------- | -------------------------------------------------- ------------------------------- |
-| WEAVIATE_URL_VERBA             | URL to your hosted Weaviate Cluster                        | Connect to your [WCS](https://console.weaviate.cloud/) Cluster                    |
-| WEAVIATE_API_KEY_VERBA         | API Credentials to your hosted Weaviate Cluster            | Connect to your [WCS](https://console.weaviate.cloud/) Cluster                    |
-| OPENAI_API_KEY                 | Your API Key                                               | Get Access to [OpenAI](https://openai.com/) Models                                |
-| COHERE_API_KEY                 | Your API Key                                               | Get Access to [Cohere](https://cohere.com/) Models                                |
-| OLLAMA_URL                     | URL to your Ollama instance (e.g. http://localhost:11434 ) | Get Access to [Ollama](https://ollama.com/) Models                                |
-| OLLAMA_MODEL                   | Model Name (e.g. llama)                                    | Get Access to a specific [Ollama](https://ollama.com/) Model                      |
-| UNSTRUCTURED_API_KEY           | Your API Key                                               | Get Access to [Unstructured](https://docs.unstructured.io/welcome) Data Ingestion |
-| UNSTRUCTURED_API_URL           | URL to Unstructured Instance                               | Get Access to [Unstructured](https://docs.unstructured.io/welcome) Data Ingestion |
-| GITHUB_TOKEN                   | Your GitHub Token                                          | Get Access to Data Ingestion via GitHub                                           |
-| GOOGLE_APPLICATION_CREDENTIALS | Google Credentials                                         | Get Access to Google Models                                                       |
-| GOOGLE_CLOUD_PROJECT           | Google Cloud Project                                       | Get Access to Google Models                                                       |
-| GOOGLE_API_KEY                 | Your API Key                                               | Get Access to Google Models                                                       |
-| VERBA_PRODUCTION               | True                                                       | Run Verba in Production Mode                                                      |
+| Variable de entorno           | Valor                                                        | Descripción                                                                      |
+| ------------------------------ | ------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| WEAVIATE_URL_VERBA            | URL a tu clúster Weaviate alojado                            | Conéctate a tu [Clúster WCS](https://console.weaviate.cloud/)                     |
+| WEAVIATE_API_KEY_VERBA        | Credenciales de API para tu clúster Weaviate alojado         | Conéctate a tu [Clúster WCS](https://console.weaviate.cloud/)                     |
+| OPENAI_API_KEY                | Tu clave de API                                              | Obtén acceso a los modelos de [OpenAI](https://openai.com/)                        |
+| COHERE_API_KEY                | Tu clave de API                                              | Obtén acceso a los modelos de [Cohere](https://cohere.com/)                        |
+| OLLAMA_URL                    | URL a tu instancia de Ollama (por ejemplo, http://localhost:11434) | Obtén acceso a los modelos de [Ollama](https://ollama.com/)                         |
+| OLLAMA_MODEL                  | Nombre del modelo (por ejemplo, llama)                       | Obtén acceso a un modelo específico de [Ollama](https://ollama.com/)                |
+| UNSTRUCTURED_API_KEY          | Tu clave de API                                              | Obtén acceso a la ingestión de datos [No Estructurados](https://docs.unstructured.io/welcome) |
+| UNSTRUCTURED_API_URL          | URL a la instancia de No Estructurados                      | Obtén acceso a la ingestión de datos [No Estructurados](https://docs.unstructured.io/welcome) |
+| GITHUB_TOKEN                  | Tu Token de GitHub                                           | Obtén acceso a la ingestión de datos a través de GitHub                             |
+| GOOGLE_APPLICATION_CREDENTIALS| Credenciales de Google                                      | Obtén acceso a los modelos de Google                                               |
+| GOOGLE_CLOUD_PROJECT          | Proyecto de Google Cloud                                    | Obtén acceso a los modelos de Google                                               |
+| GOOGLE_API_KEY                | Tu clave de API de Google                                   | Obtén acceso a los modelos de Google                                               |
+| VERBA_PRODUCTION              | Verdadero                                                    | Ejecuta Verba en modo de producción                                               |
 
 ## Weaviate
 
