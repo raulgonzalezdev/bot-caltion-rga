@@ -1,4 +1,3 @@
----
 version: '3.4'
 
 services:
@@ -17,7 +16,7 @@ services:
       - UNSTRUCTURED_API_KEY=$UNSTRUCTURED_API_KEY
       - UNSTRUCTURED_API_URL=$UNSTRUCTURED_API_URL
       - GITHUB_TOKEN=$GITHUB_TOKEN
-      ## IF YOU WANT AUTHENTICATION, UNCOMENT BELLOW 
+      ## IF YOU WANT AUTHENTICATION, UNCOMMENT BELOW 
       ## AND ADD WEAVIATE SERVICE
       #- WEAVIATE_API_KEY_VERBA=adminkey
 
@@ -32,6 +31,8 @@ services:
       timeout: 10s
       retries: 5
       start_period: 10s
+    networks:
+      - network_bot
 
   weaviate:
     command:
@@ -69,7 +70,11 @@ services:
       # AUTHORIZATION_ADMINLIST_ENABLED: 'true'
       # AUTHORIZATION_ADMINLIST_USERS: 'john@doe.com'
       # AUTHORIZATION_ADMINLIST_READONLY_USERS: 'jane@doe.com'
+    networks:
+      - network_bot
 
 volumes:
   weaviate_data: {}
-...
+
+networks:
+  network_bot:
