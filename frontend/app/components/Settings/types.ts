@@ -128,7 +128,7 @@ const BaseCustomization: CustomizationSettings = {
       description: "Marcador de posición de entrada",
     },
     image: {
-      src: "https://github.com/raulgonzalezdev/bot-caltion-rga/tree/main/img/icon.png?raw=true",
+      src: "https://raw.githubusercontent.com/raulgonzalezdev/bot-caltion-rga/main/img/icon.png",
       type: "image",
       description: "Logotipo de la Página",
     },
@@ -210,7 +210,7 @@ const CustomCustomization: CustomizationSettings = {
       description: "Marcador de posición de entrada",
     },
     image: {
-      src: "https://github.com/raulgonzalezdev/bot-caltion-rga/tree/main/img/icon.png?raw=true",
+      src: "https://raw.githubusercontent.com/raulgonzalezdev/bot-caltion-rga/main/img/icon.png",
       type: "image",
       description: "Logotipo de la Página",
     },
@@ -292,7 +292,7 @@ const DarkModeCustomization: CustomizationSettings = {
       description: "Marcador de posición de entrada",
     },
     image: {
-      src: "https://github.com/raulgonzalezdev/bot-caltion-rga/tree/main/img/icon.png?raw=true",
+      src: "https://raw.githubusercontent.com/raulgonzalezdev/bot-caltion-rga/main/img/icon.png",
       type: "image",
       description: "Logotipo de la Página",
     },
