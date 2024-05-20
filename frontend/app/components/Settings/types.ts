@@ -128,7 +128,7 @@ const BaseCustomization: CustomizationSettings = {
       description: "Marcador de posición de entrada",
     },
     image: {
-      src: "https://github.com/weaviate/Verba/blob/main/img/verba_icon.png?raw=true",
+      src: "https://github.com/raulgonzalezdev/bot-caltion-rga/tree/main/img/icon.png?raw=true",
       type: "image",
       description: "Logotipo de la Página",
     },
@@ -210,12 +210,12 @@ const CustomCustomization: CustomizationSettings = {
       description: "Marcador de posición de entrada",
     },
     image: {
-      src: "https://github.com/weaviate/Verba/blob/main/img/verba_icon.png?raw=true",
+      src: "https://github.com/raulgonzalezdev/bot-caltion-rga/tree/main/img/icon.png?raw=true",
       type: "image",
       description: "Logotipo de la Página",
     },
     primary_color: {
-      color: "#FDFF91",
+      color: "#91d4ff",
       type: "color",
       description: "Primary Color",
     },
@@ -292,7 +292,7 @@ const DarkModeCustomization: CustomizationSettings = {
       description: "Marcador de posición de entrada",
     },
     image: {
-      src: "https://github.com/weaviate/Verba/blob/main/img/verba_icon.png?raw=true",
+      src: "https://github.com/raulgonzalezdev/bot-caltion-rga/tree/main/img/icon.png?raw=true",
       type: "image",
       description: "Logotipo de la Página",
     },
