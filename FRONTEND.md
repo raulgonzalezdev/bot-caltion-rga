@@ -11,7 +11,7 @@ Para tener su copia local de la interfaz de Verba en funcionamiento, siga estos 
 
 ```git
 
-clon de git https://github.com/weaviate/Verba.git
+clon de git https://gitlab.com/raul.gonzalez.dev/Caltion-Rga-Bot
 
 ```
 
