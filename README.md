@@ -4,7 +4,7 @@
 ## Caltion Bot Rga
 
 
-Bienvenido a Caltion Bot Rga, un proyecto basado en Verba: The Golden RAGtriever, una aplicación de código abierto de la comunidad diseñada para ofrecer una interfaz de extremo a extremo, optimizada y fácil de usar para la generación aumentada de recuperación (RAG). En este proyecto, hemos adaptado y personalizado la funcionalidad de Caltion Bot Rga para satisfacer nuestras necesidades específicas. Agradecemos a la comunidad de Weaviate por proporcionar la base sobre la cual construimos nuestro proyecto.
+Bienvenido a Caltion Bot Rga, un proyecto basado en Verba: Laboratorio Bernabo, una aplicación de código abierto de la comunidad diseñada para ofrecer una interfaz de extremo a extremo, optimizada y fácil de usar para la generación aumentada de recuperación (RAG). En este proyecto, hemos adaptado y personalizado la funcionalidad de Caltion Bot Rga para satisfacer nuestras necesidades específicas. Agradecemos a la comunidad de Weaviate por proporcionar la base sobre la cual construimos nuestro proyecto.
 
 Caltion Bot Rga permite explorar conjuntos de datos y extraer información de manera eficiente, ya sea localmente utilizando herramientas como HuggingFace y Ollama, o mediante proveedores de LLM como OpenAI, Cohere y Google. Estamos comprometidos con el desarrollo y la mejora continua de esta aplicación para brindar una experiencia aún más completa y útil a nuestros usuarios.
 

@@ -113,17 +113,17 @@ const BaseCustomization: CustomizationSettings = {
   settings: {
     title: { text: "Bernabo", type: "text", description: "Título de la página" },
     subtitle: {
-      text: "The Golden RAGtriever",
+      text: "Laboratorio Bernabo",
       type: "text",
       description: "Subtítulo de la página",
     },
     intro_message: {
-      text: "Welcome to Verba, your open-source RAG application!",
+      text: "Bienvenido al asistente AI de Laboratorios Bernabó",
       type: "text",
       description: "Mensaje de introducción",
     },
     placeholder_message: {
-      text: "Ask Verba anything!",
+      text: "¡Pregúntale cualquier cosa a Bernabo Bot!",
       type: "text",
       description: "Marcador de posición de entrada",
     },
@@ -133,7 +133,7 @@ const BaseCustomization: CustomizationSettings = {
       description: "Logotipo de la Página",
     },
     primary_color: {
-      color: "#FDFF91",
+      color: "#91d4ff",
       type: "color",
       description: "Primary Color",
     },
@@ -195,17 +195,17 @@ const CustomCustomization: CustomizationSettings = {
   settings: {
     title: { text: "My RAG", type: "text", description: "Título de la página" },
     subtitle: {
-      text: "Powered by Weaviate",
+      text: "Powered by Caltion",
       type: "text",
       description: "Subtítulo de la página",
     },
     intro_message: {
-      text: "Welcome to Verba, your open-source RAG application!",
+      text: "Bienvenido al asistente AI de Laboratorios Bernabó",
       type: "text",
       description: "Mensaje de introducción",
     },
     placeholder_message: {
-      text: "Ask Verba anything!",
+      text: "¡Pregúntale cualquier cosa a Bernabo Bot!",
       type: "text",
       description: "Marcador de posición de entrada",
     },
@@ -277,17 +277,17 @@ const DarkModeCustomization: CustomizationSettings = {
   settings: {
     title: { text: "Bernabo", type: "text", description: "Título de la página" },
     subtitle: {
-      text: "The Dark RAGtriever",
+      text: "Laboratorio Bernabo",
       type: "text",
       description: "Subtítulo de la página",
     },
     intro_message: {
-      text: "Welcome to the dark mode version of Verba! Spooky, right?",
+      text: "Bienvenido al asistente AI de Laboratorios Bernabó",
       type: "text",
       description: "Mensaje de introducción",
     },
     placeholder_message: {
-      text: "Ask anything!",
+      text: "¡Pregúntale cualquier cosa a Bernabo Bot!",
       type: "text",
       description: "Marcador de posición de entrada",
     },

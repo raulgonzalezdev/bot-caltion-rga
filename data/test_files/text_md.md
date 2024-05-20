@@ -1,7 +1,7 @@
 # Verba 
-## 🐕 The Golden RAGtriever
+## 🐕 Laboratorio Bernabo
 
-Welcome to Verba: The Golden RAGtriever, an open-source application designed to offer an end-to-end, streamlined, and user-friendly interface for Retrieval-Augmented Generation (RAG) out of the box. In just a few easy steps, explore your datasets and extract insights with ease, either locally or through LLM providers such as OpenAI, Cohere, and HuggingFace.
+Welcome to Verba: Laboratorio Bernabo, an open-source application designed to offer an end-to-end, streamlined, and user-friendly interface for Retrieval-Augmented Generation (RAG) out of the box. In just a few easy steps, explore your datasets and extract insights with ease, either locally or through LLM providers such as OpenAI, Cohere, and HuggingFace.
 
 ```
 pip install goldenverba
