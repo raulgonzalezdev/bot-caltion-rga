@@ -9,15 +9,14 @@ services:
     ports:
       - 8000:8000
     environment:
-      #- WEAVIATE_URL_VERBA=http://weaviate:8080
+      - WEAVIATE_URL_VERBA=http://weaviate:8080
       - OPENAI_API_KEY=$OPENAI_API_KEY
-      #- COHERE_API_KEY=$COHERE_API_KEY
+      - COHERE_API_KEY=$COHERE_API_KEY
       - OLLAMA_URL=http://host.docker.internal:11434
       - OLLAMA_MODEL=$OLLAMA_MODEL
-      - NODE_ENV=development
-      #- UNSTRUCTURED_API_KEY=$UNSTRUCTURED_API_KEY
-      #- UNSTRUCTURED_API_URL=$UNSTRUCTURED_API_URL
-      #- GITHUB_TOKEN=$GITHUB_TOKEN
+      - UNSTRUCTURED_API_KEY=$UNSTRUCTURED_API_KEY
+      - UNSTRUCTURED_API_URL=$UNSTRUCTURED_API_URL
+      - GITHUB_TOKEN=$GITHUB_TOKEN
       ## IF YOU WANT AUTHENTICATION, UNCOMENT BELLOW 
       ## AND ADD WEAVIATE SERVICE
       #- WEAVIATE_API_KEY_VERBA=adminkey
@@ -27,8 +26,6 @@ services:
     depends_on:
       weaviate:
         condition: service_healthy
-     
-      
     healthcheck:
       test: wget --no-verbose --tries=3 --spider http://localhost:8000 || exit 1
       interval: 5s
@@ -59,7 +56,7 @@ services:
       start_period: 10s
     environment:
       OPENAI_APIKEY: $OPENAI_API_KEY
-      #COHERE_APIKEY: $COHERE_API_KEY
+      COHERE_APIKEY: $COHERE_API_KEY
       QUERY_DEFAULTS_LIMIT: 25
       AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'true'
       PERSISTENCE_DATA_PATH: '/var/lib/weaviate'
@@ -72,9 +69,7 @@ services:
       # AUTHORIZATION_ADMINLIST_ENABLED: 'true'
       # AUTHORIZATION_ADMINLIST_USERS: 'john@doe.com'
       # AUTHORIZATION_ADMINLIST_READONLY_USERS: 'jane@doe.com'
-  
 
 volumes:
   weaviate_data: {}
-
 ...
