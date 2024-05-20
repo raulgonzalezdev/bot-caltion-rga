@@ -13,24 +13,24 @@ pip install goldenCaltion Bot Rga
 ```
 
 
--[Caltion Bot Rga](#Caltion Bot Rga)
--[🎯 ¿Qué es Caltion Bot Rga?](#que-es-Caltion Bot Rga)
--[✨ Características](#listas-de-características)
--[✨ Primeros pasos con Caltion Bot Rga](#empezando-con-Caltion Bot Rga)
--[🔑 Claves API](#claves-api)
--[Weaviate](#weaviate)
--[Ollama](#ollama)
--[Google](#Google)
--[No estructurado](#no estructurado)
--[Abierto AI](#openai)
--[AbrazosCara](#caradeabrazo)
--[Inicio rápido: Implementación con pip](#cómo-implementar-con-pip)
--[Inicio rápido: compilar desde el código fuente](#cómo-construir-desde-fuente)
--[Inicio rápido: Implementación con Docker](#cómo-instalar-Caltion Bot Rga-con-docker)
--[💾 Tutorial de Caltion Bot Rga](#️Caltion Bot Rga-tutorial)
--[💖 Contribución de código abierto](#contribución-de-código-abierto)
--[🚩 Problemas conocidos](#Problemas conocidos)
--[❔Preguntas frecuentes](#Preguntas más frecuentes)
+- [Caltion Bot Rga](#Caltion-Bot-Rga)
+- [🎯 ¿Qué es Caltion Bot Rga?](#qué-es-Caltion-Bot-Rga)
+- [✨ Características](#listas-de-características)
+- [✨ Primeros pasos con Caltion Bot Rga](#empezando-con-Caltion-Bot-Rga)
+- [🔑 Claves API](#claves-api)
+  - [Weaviate](#weaviate)
+  - [Ollama](#ollama)
+  - [Google](#google)
+  - [No estructurado](#no-estructurado)
+  - [Abierto AI](#openai)
+- [Inicio rápido: Implementación con pip](#cómo-implementar-con-pip)
+- [Inicio rápido: compilar desde el código fuente](#cómo-construir-desde-fuente)
+- [Inicio rápido: Implementación con Docker](#cómo-instalar-Caltion-Bot-Rga-con-docker)
+- [💾 Tutorial de Caltion Bot Rga](#️Caltion-Bot-Rga-tutorial)
+- [💖 Contribución de código abierto](#contribución-de-código-abierto)
+- [🚩 Problemas conocidos](#problemas-conocidos)
+- [❔Preguntas frecuentes](#preguntas-más-frecuentes)
+
 
 ## ¿Qué es Caltion Bot Rga?
 
