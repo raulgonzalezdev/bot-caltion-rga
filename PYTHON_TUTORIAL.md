@@ -1,70 +1,70 @@
-# Installing Python and Setting Up a Virtual Environment
+# Instalar Python y configurar un entorno virtual
 
-Before you can use Verba, you'll need to ensure that `Python >=3.10.0` is installed on your system and that you can create a virtual environment for a safer and cleaner project setup.
+Antes de poder usar Verba, deberá asegurarse de que `Python >=3.10.0` esté instalado en su sistema y de que pueda crear un entorno virtual para una configuración del proyecto más segura y limpia.
 
-## Installing Python
+## Instalando Python
 
-Python is required to run Verba. If you don't have Python installed, follow these steps:
+Se requiere Python para ejecutar Verba. Si no tienes Python instalado, sigue estos pasos:
 
-### For Windows:
+### Para ventanas:
 
-Download the latest Python installer from the official Python website.
-Run the installer and make sure to check the box that says `Add Python to PATH` during installation.
+Descargue el último instalador de Python desde el sitio web oficial de Python.
+Ejecute el instalador y asegúrese de marcar la casilla que dice "Agregar Python a la RUTA" durante la instalación.
 
-### For macOS:
+### Para MacOS:
 
-You can install Python using Homebrew, a package manager for macOS, with the following command in the terminal:
+Puedes instalar Python usando Homebrew, un administrador de paquetes para macOS, con el siguiente comando en la terminal:
 
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-Then install Python:
+Luego instale Python:
 
 ```
-brew install python
+instalar python
 ```
 
-### For Linux:
+### Para Linux:
 
-Python usually comes pre-installed on most Linux distributions. If it's not, you can install it using your distribution's package manager. You can read more about it [here](https://opensource.com/article/20/4/install-python-linux)
+Python suele venir preinstalado en la mayoría de las distribuciones de Linux. Si no es así, puede instalarlo usando el administrador de paquetes de su distribución. Puede leer más al respecto [aquí](https://opensource.com/article/20/4/install-python-linux)
 
-## Setting Up a Virtual Environment
+## Configurar un entorno virtual
 
-It's recommended to use a virtual environment to avoid conflicts with other projects or system-wide Python packages.
+Se recomienda utilizar un entorno virtual para evitar conflictos con otros proyectos o paquetes de Python en todo el sistema.
 
-### Install the virtualenv package:
+### Instale el paquete virtualenv:
 
-First, ensure you have pip installed (it comes with Python if you're using version 3.4 and above).
-Install virtualenv by running:
+Primero, asegúrese de tener pip instalado (viene con Python si usa la versión 3.4 y superior).
+Instale virtualenv ejecutando:
 
 ```
-pip install virtualenv
+instalación de pip virtualenv
 ```
 
-### Create a Virtual Environment:
+### Crear un entorno virtual:
 
-Navigate to your project's directory in the terminal.
-Run the following command to create a virtual environment named venv (you can name it anything you like):
+Navegue al directorio de su proyecto en la terminal.
+Ejecute el siguiente comando para crear un entorno virtual llamado venv (puede nombrarlo como desee):
 
 ```
 python3 -m virtualenv venv
 ```
 
-### Activate the Virtual Environment:
+### Activar el entorno virtual:
 
-- On Windows, activate the virtual environment by running:
+- En Windows, active el entorno virtual ejecutando:
 
 ```
 venv\Scripts\activate.bat
 ```
 
-- On macOS and Linux, activate it with:
+- En macOS y Linux, actívalo con:
 
 ```
-source venv/bin/activate
+fuente venv/bin/activar
 ```
 
-Once your virtual environment is activated, you'll see its name in the terminal prompt. Now you're ready to install Verba using the steps provided in the Quickstart sections.
+Una vez que su entorno virtual esté activado, verá su nombre en el mensaje de la terminal. Ahora está listo para instalar Verba siguiendo los pasos proporcionados en las secciones de Inicio rápido.
 
-> Remember to deactivate the virtual environment when you're done working with Verba by simply running deactivate in the terminal.
+> Recuerde desactivar el entorno virtual cuando haya terminado de trabajar con Verba simplemente ejecutando desactivar en la terminal.

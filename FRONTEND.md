@@ -1,35 +1,36 @@
-# Verba - Frontend Documentation
 
-Verba's Frontend is a [NextJS](https://nextjs.org/) application used together with [TailwindCSS](https://tailwindcss.com/) and [DaisyUI](https://daisyui.com/).
+# Verba - Documentación del front-end
 
-## 🚀 Setting Up the Frontend
+El frontend de Verba es una aplicación [NextJS](https://nextjs.org/) que se utiliza junto con [TailwindCSS](https://tailwindcss.com/) y [DaisyUI](https://daisyui.com/).
 
-To get your local copy of the Verba frontend up and running, please follow these simple steps:
+## 🚀 Configurando la interfaz
 
-1. Clone Repository
+Para tener su copia local de la interfaz de Verba en funcionamiento, siga estos sencillos pasos:
+
+1. Repositorio de clones
 
 ```git
 
-git clone https://github.com/weaviate/Verba.git
+clon de git https://gitlab.com/raul.gonzalez.dev/Caltion-Rga-Bot
 
 ```
 
-1. **Node.js Requirement**:
+1. **Requisito de Node.js**:
 
-   - Confirm that Node.js version `>=21.3.0` is installed on your system. If you need to install or update Node.js, visit the official [Node.js website](https://nodejs.org/).
+- Confirme que la versión de Node.js `>=21.3.0` esté instalada en su sistema. Si necesita instalar o actualizar Node.js, visite el [sitio web de Node.js] oficial (https://nodejs.org/).
 
-2. **Installation**:
+2. **Instalación**:
 
-   - Navigate to the frontend directory: `cd frontend`
-   - Run `npm install` to install the dependencies required for the project.
+- Navegue hasta el directorio de la interfaz: `cd frontend`
+- Ejecute `npm install` para instalar las dependencias necesarias para el proyecto.
 
-3. **Development Server**:
-   - Launch the application in development mode by executing `npm run dev`.
-   - Open your web browser and visit `http://localhost:3000` to view the application.
+3. **Servidor de desarrollo**:
+- Inicie la aplicación en modo de desarrollo ejecutando `npm run dev`.
+- Abra su navegador web y visite `http://localhost:3000` para ver la aplicación.
 
-## 📦 Building Static Pages for FastAPI
+## 📦 Creación de páginas estáticas para FastAPI
 
-If you wish to serve and update the frontend through FastAPI, you need to build static pages:
+Si desea servir y actualizar la interfaz a través de FastAPI, necesita crear páginas estáticas:
 
-1. **Build Process**:
-   - Execute `npm run build` to generate the static production build. The output will be directed to the FastAPI folder configured to serve the static content.
+1. **Proceso de construcción**:
+- Ejecute `npm run build` para generar la compilación de producción estática. La salida se dirigirá a la carpeta FastAPI configurada para servir el contenido estático.

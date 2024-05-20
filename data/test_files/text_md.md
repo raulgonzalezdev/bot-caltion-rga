@@ -195,7 +195,7 @@ Visit localhost:8000
 
 1. **Clone the Verba repos**
 ```
-git clone https://github.com/weaviate/Verba.git
+git clone https://gitlab.com/raul.gonzalez.dev/Caltion-Rga-Bot
 ```
 
 2. **Initialize a new Python Environment**
@@ -355,7 +355,7 @@ If you're unfamiliar with Docker, you can learn more about it [here](https://doc
 Ensure you have Git installed on your system. Then, open a terminal or command prompt and run the following command to clone the Verba repository:
 
 ```
-git clone https://github.com/weaviate/Verba.git
+git clone https://gitlab.com/raul.gonzalez.dev/Caltion-Rga-Bot
 ```
 
 1. **Set neccessary environment variables**

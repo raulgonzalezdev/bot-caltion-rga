@@ -35,6 +35,10 @@ setup(
         "tiktoken==0.6.0",
         "requests==2.31.0",
         "pypdf==4.2.0",
+        "pgvector==0.2.5",
+        "phidata==2.4.8",
+        "psycopg[binary]==3.1.18",
+        "sqlalchemy==2.0.29",
     ],
     extras_require={
         "dev": ["pytest", "wheel", "twine", "black>=23.7.0", "setuptools"],
