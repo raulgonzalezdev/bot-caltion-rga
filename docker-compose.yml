@@ -49,12 +49,7 @@ services:
     volumes:
       - weaviate_data:/var/lib/weaviate
     restart: on-failure:0
-    healthcheck:
-      test: wget --no-verbose --tries=3 --spider http://localhost:8080/v1/.well-known/ready || exit 1
-      interval: 5s
-      timeout: 10s
-      retries: 5
-      start_period: 10s
+   
     environment:
       OPENAI_APIKEY: $OPENAI_API_KEY
       COHERE_APIKEY: $COHERE_API_KEY
