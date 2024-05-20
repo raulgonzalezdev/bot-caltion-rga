@@ -2,6 +2,8 @@ from fastapi import FastAPI, WebSocket, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
+from sqlalchemy import create_engine
+#from phi.vectordb.pgvector import PgVector2
 
 import os
 from pathlib import Path
@@ -23,7 +25,14 @@ from goldenverba.server.types import (
 )
 from goldenverba.server.util import get_config, set_config, setup_managers
 
+
+
 load_dotenv()
+
+# Configuración de la conexión a la base de datos PgVector
+#def get_vector_db():
+#    db_url = "postgresql+psycopg2://ai:ai@localhost:5532/ai"
+#    return PgVector2(db_url=db_url, collection="my_document_vectors")
 
 # Check if runs in production
 production_key = os.environ.get("VERBA_PRODUCTION", "")
@@ -243,6 +252,12 @@ async def import_data(payload: ImportPayload):
         documents, logging = manager.import_data(
             payload.data, payload.textValues, logging
         )
+        # Agregar la integración con PgVector aquí
+        #vector_db = get_vector_db()
+        #for document in documents:
+        #    vector = document.embed()  # Suponiendo que tienes una función para obtener el vector
+        #    vector_db.insert(document.id, vector)  # Asegúrate de que el ID y el vector están correctamente definidos
+
 
         return JSONResponse(
             content={
