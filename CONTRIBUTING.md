@@ -1,56 +1,58 @@
-# Verba Contribution Guidelines
 
-Welcome to the Verba community! We're thrilled that you're interested in contributing to the Verba project. Verba is a collaborative open-source project, and we believe that everyone has something unique to contribute. Below you'll find our guidelines which aim to make contributing to Verba a respectful and pleasant experience for everyone.
+# Pautas de contribución de Verba
 
-## 🌟 Community and Open Source
+¡Bienvenido a la comunidad Verba! Estamos encantados de que esté interesado en contribuir al proyecto Verba. Verba es un proyecto colaborativo de código abierto y creemos que todos tienen algo único que aportar. A continuación encontrará nuestras pautas cuyo objetivo es hacer que contribuir a Verba sea una experiencia respetuosa y placentera para todos.
 
-Open source is at the heart of Verba. We appreciate feedback, ideas, and enhancements from the community. Whether you're looking to fix a bug, add a new feature, or simply improve the documentation, your contribution is important to us.
+## 🌟 Comunidad y código abierto
 
-## 📚 Before You Begin
+El código abierto es el corazón de Verba. Agradecemos los comentarios, ideas y mejoras de la comunidad. Ya sea que esté buscando corregir un error, agregar una nueva característica o simplemente mejorar la documentación, su contribución es importante para nosotros.
 
-Before contributing, please take a moment to read through the [README](https://github.com/weaviate/Verba/README.md) and the [Technical Documentation](https://github.com/weaviate/Verba/TECHNICAL.md). These documents provide a comprehensive understanding of the project and are essential reading to ensure that we're all on the same page.
+## 📚 Antes de comenzar
 
-## 🐛 Reporting Issues
+Antes de contribuir, tómate un momento para leer el [README](https://github.com/weaviate/Verba/README.md) y la [Documentación técnica](https://github.com/weaviate/Verba/ TÉCNICO.md). Estos documentos brindan una comprensión integral del proyecto y son una lectura esencial para garantizar que todos estemos en la misma página.
 
-If you've identified a bug or have an idea for an enhancement, please begin by creating an Issue. Here's how:
+## 🐛 Informar problemas
 
-- Check the Issue tracker to ensure the bug or enhancement hasn't already been reported.
-- Clearly describe the issue including steps to reproduce when it is a bug.
-- Include as much relevant information as possible.
+Si identificó un error o tiene una idea para mejorarlo, comience creando un problema. Así es cómo:
 
-## 💡 Ideas and Feedback
+- Verifique el rastreador de problemas para asegurarse de que el error o la mejora no se hayan informado aún.
+- Describa claramente el problema, incluidos los pasos para reproducirlo, cuando se trate de un error.
+- Incluir tanta información relevante como sea posible.
 
-We welcome all ideas and feedback. If you're not ready to open an Issue or if you're just looking for a place to discuss ideas, head over to our [GitHub Discussions](https://github.com/weaviate/Verba/discussions) or the [Weaviate Support Page](https://forum.weaviate.io/).
+## 💡 Ideas y comentarios
 
-## 📝 Pull Requests
+Damos la bienvenida a todas las ideas y comentarios. Si no está listo para abrir un problema o si simplemente está buscando un lugar para discutir ideas, diríjase a nuestras [Discusiones de GitHub](https://github.com/weaviate/Verba/discussions) o al [ Página de soporte de Weaviate](https://forum.weaviate.io/).
 
-If you're ready to contribute code or documentation, please submit a Pull Request (PR) to the dev branch. Here's the process:
+## 📝 Solicitudes de extracción
 
-- Fork the repository and create your branch from `main`.
-- Ensure that your code adheres to the existing code style. Use [Black](https://github.com/psf/black) for formatting Python code.
-- If you're adding a new feature, consider writing unit tests and documenting the feature.
-- Verify that your changes pass existing unit tests
-- Make sure your code lints (mypy compatibility is optional but encouraged).
-- Include a clear description of your changes in the PR.
-- Link to the Issue in your PR description.
+Si está listo para contribuir con código o documentación, envíe una solicitud de extracción (PR) a la rama de desarrollo. Aquí está el proceso:
 
-### 🧪 Tests and Formatting
+- Bifurca el repositorio y crea tu rama desde `main`.
+- Asegúrese de que su código se adhiera al estilo de código existente. Utilice [Negro](https://github.com/psf/black) para formatear el código Python.
+- Si está agregando una nueva característica, considere escribir pruebas unitarias y documentar la característica.
+- Verifique que sus cambios pasen las pruebas unitarias existentes
+- Asegúrese de que su código tenga pelusas (la compatibilidad con mypy es opcional, pero se recomienda).
+- Incluya una descripción clara de sus cambios en el PR.
+- Enlace al problema en la descripción de su PR.
 
-To maintain the quality of the codebase, we ask that all contributors:
+### 🧪 Pruebas y formato
 
-- Run unit tests to ensure that nothing is broken.
-- Use [Black](https://github.com/psf/black) to format your code before submitting.
+Para mantener la calidad del código base, solicitamos a todos los contribuyentes:
 
-### 🔄 Pull Request Process
+- Ejecute pruebas unitarias para asegurarse de que no haya ningún problema.
+- Utilice [Negro](https://github.com/psf/black) para formatear su código antes de enviarlo.
 
-- PRs are reviewed on a regular basis.
-- Engage in the conversation and make requested updates to your PR if needed.
-- Once approved, your PR will be merged into the main branch by a maintainer.
+### 🔄 Proceso de solicitud de extracción
 
-## 🗨️ Stay Connected
+- Los RP se revisan periódicamente.
+- Participe en la conversación y realice las actualizaciones solicitadas a su PR si es necesario.
+- Una vez aprobado, un mantenedor fusionará su PR en la rama principal.
 
-We encourage you to join our community channels. Stay connected, share ideas, and get to know fellow contributors.
+## 🗨️ Manténgase conectado
 
-Thank you for being a part of Verba. Your contributions not only help improve the project but also the wider community of users and developers.
+Le animamos a unirse a nuestros canales comunitarios. Manténgase conectado, comparta ideas y conozca a otros colaboradores.
 
-Happy contributing!
+Gracias por ser parte de Verba. Sus contribuciones no sólo ayudan a mejorar el proyecto sino también a la comunidad más amplia de usuarios y desarrolladores.
+
+¡Feliz contribución!
+

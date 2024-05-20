@@ -1,119 +1,119 @@
-# Verba: The Golden RAGtriever Technical Documentation
+# Verba: La documentación técnica del Golden RAGtriever
 
-This document provides an overview of the general modular architecture of Verba.
+Este documento proporciona una descripción general de la arquitectura modular general de Verba.
 
-![Demo of Verba](https://github.com/weaviate/Verba/blob/dev/img/verba_architecture.png)
+![Demostración de Verba](https://github.com/weaviate/Verba/blob/dev/img/verba_architecture.png)
 
-## System Architecture
+## Arquitectura del sistema
 
-Verba's system is modularly constructed, comprising five primary components: Reader, Chunkers, Embedder, Retrievers, and Generators. Each component is designed with an interface outlining its methods, input expectations, and output specifications. Component Managers oversee the operations of their respective components, ensuring smooth data flow through the system. At the core of the architecture is the Verba Manager, orchestrating the entire process from data input to answer generation.
+El sistema de Verba está construido de forma modular y consta de cinco componentes principales: lector, fragmentadores, incrustador, recuperadores y generadores. Cada componente está diseñado con una interfaz que describe sus métodos, expectativas de entrada y especificaciones de salida. Los administradores de componentes supervisan las operaciones de sus respectivos componentes, asegurando un flujo de datos fluido a través del sistema. En el centro de la arquitectura se encuentra Verba Manager, que organiza todo el proceso desde la entrada de datos hasta la generación de respuestas.
 
-### 1. Reader
+### 1. Lector
 
-**Purpose:**
-The Reader module is responsible for loading various data formats into the Verba system.
+**Objetivo:**
+El módulo Lector es responsable de cargar varios formatos de datos en el sistema Verba.
 
-**Input: List[FileData]**
+**Entrada: Lista[FileData]**
 
-```python
+```pitón
 
-class FileData(BaseModel):
-    filename: str
-    extension: str
-    content: str
-
-```
-
-**Output: List[Document]**
-
-```python
-
-class Document:
-    def __init__(
-        self,
-        text: str = "",
-        type: str = "",
-        name: str = "",
-        path: str = "",
-        link: str = "",
-        timestamp: str = "",
-        reader: str = "",
-        meta: dict = None,
-    ):
-        if meta is None:
-            meta = {}
-        self._text = text
-        self._type = type
-        self._name = name
-        self._path = path
-        self._link = link
-        self._timestamp = timestamp
-        self._reader = reader
-        self._meta = meta
-        self.chunks: list[Chunk] = []
+clase FileData(BaseModel):
+nombre de archivo: str
+extensión: cadena
+contenido: cadena
 
 ```
 
-### 2. Chunkers
+**Salida: Lista[Documento]**
 
-**Purpose:**
-Chunkers segment larger documents into smaller, manageable chunks suitable for vectorization and retrieval.
+```pitón
 
-**Input & Output: List[Document]**
-
-```python
-
-class Chunk:
-    def __init__(
-        self,
-        text: str = "",
-        doc_name: str = "",
-        doc_type: str = "",
-        doc_uuid: str = "",
-        chunk_id: str = "",
-    ):
-        self._text = text
-        self._doc_name = doc_name
-        self._doc_type = doc_type
-        self._doc_uuid = doc_uuid
-        self._chunk_id = chunk_id
-        self._tokens = 0
-        self._vector = None
-        self._score = 0
+Documento de clase:
+definición __init__(
+ser,
+texto: cadena = "",
+tipo: cadena = "",
+nombre: cadena = "",
+ruta: cadena = "",
+enlace: cadena = "",
+marca de tiempo: cadena = "",
+lector: str = "",
+meta: dict = Ninguno,
+):
+si meta es Ninguno:
+meta = {}
+self._text = texto
+self._type = tipo
+self._name = nombre
+self._path = ruta
+self._link = enlace
+self._timestamp = marca de tiempo
+self._reader = lector
+self._meta = meta
+self.chunks: lista[Chunk] = []
 
 ```
 
-> The Document Class contains a list of chunks, the Chunker will append the chunks into that list. It will skip chunking if the document already contains chunks.
+### 2. Trozos
 
-### 3. Embedders
+**Objetivo:**
+Los fragmentadores segmentan documentos más grandes en fragmentos más pequeños y manejables, adecuados para la vectorización y la recuperación.
 
-**Purpose:**
-The Embedder takes the chunked data, transforms it into vectorized form, and ingests it into Weaviate.
+**Entrada y salida: Lista[Documento]**
 
-**Input: List[Document]**
+```pitón
 
-### 4. Retrievers
+fragmento de clase:
+definición __init__(
+ser,
+texto: cadena = "",
+nombre_doc: cadena = "",
+tipo_doc: cadena = "",
+doc_uuid: cadena = "",
+trozo_id: cadena = "",
+):
+self._text = texto
+self._doc_name = nombre_doc
+self._doc_type = tipo_doc
+self._doc_uuid = doc_uuid
+self._chunk_id = fragmento_id
+self._tokens = 0
+self._vector = Ninguno
+self._score = 0
 
-**Purpose:**
-Retrievers are tasked with locating the most relevant chunks based on user queries using vector search methodologies.
+```
 
-**Output: List[Chunk]**
+> La Clase de Documento contiene una lista de fragmentos, el Chunker agregará los fragmentos a esa lista. Se omitirá la fragmentación si el documento ya contiene fragmentos.
 
-### 5. Generators
+### 3. Incrustadores
 
-**Purpose:**
-Generators synthesize answers by utilizing the retrieved chunks and the context of user queries.
+**Objetivo:**
+Embedder toma los datos fragmentados, los transforma en forma vectorizada y los ingiere en Weaviate.
 
-**Input: str**
-**Output: str**
+**Entrada: Lista[Documento]**
 
-## Core Component: Verba Manager
+### 4. Perros perdigueros
 
-### Overview
+**Objetivo:**
+Los recuperadores tienen la tarea de localizar los fragmentos más relevantes en función de las consultas de los usuarios utilizando metodologías de búsqueda vectorial.
 
-The Verba Manager is the heart of the system, holding all Component Managers and facilitating the data flow from reading to answer generation.
+**Salida: Lista[fragmento]**
 
-### Interaction with FastAPI
+### 5. Generadores
 
-The FastAPI application serves as the interface to the frontend and interacts solely with the Verba Manager.
-This encapsulation ensures a clean and maintainable codebase where the API endpoints communicate with a single point of reference within the Verba ecosystem.
+**Objetivo:**
+Los generadores sintetizan respuestas utilizando los fragmentos recuperados y el contexto de las consultas de los usuarios.
+
+**Entrada: cadena**
+**Salida: cadena**
+
+## Componente principal: Verba Manager
+
+### Descripción general
+
+Verba Manager es el corazón del sistema, contiene todos los administradores de componentes y facilita el flujo de datos desde la lectura hasta la generación de respuestas.
+
+### Interacción con FastAPI
+
+La aplicación FastAPI sirve como interfaz para el frontend e interactúa únicamente con Verba Manager.
+Esta encapsulación garantiza una base de código limpia y fácil de mantener donde los puntos finales de la API se comunican con un único punto de referencia dentro del ecosistema de Verba.
