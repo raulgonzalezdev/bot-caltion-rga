@@ -25,5 +25,5 @@ RUN rm -rf /root/.local/share/weaviate/verba_cache_minilm \
 # Copy local data to the appropriate directory in the container
 COPY data/weaviate_data /root/.local/share/weaviate
 
-EXPOSE 8001
+EXPOSE 8000
 CMD ["verba", "start", "--port", "8000", "--host", "0.0.0.0"]
