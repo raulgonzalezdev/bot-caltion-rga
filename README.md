@@ -418,6 +418,6 @@ Puede obtener más información sobre la arquitectura y la implementación de Ca
 -**¿Cómo puedo especificar el puerto?**
 -Puedes usar el puerto y el indicador de host.
 
- `Caltion Bot Rga start --port 9000 -host 0.0.0.0`
+ `Verba start --port 9000 -host 0.0.0.0`
 
 

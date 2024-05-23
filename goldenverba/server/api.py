@@ -1,9 +1,21 @@
-from fastapi import FastAPI, WebSocket, status
+from fastapi import FastAPI, WebSocket, status, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy import create_engine
-#from phi.vectordb.pgvector import PgVector2
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine, MetaData, Table, Column, String, Text,Float,Integer, JSON, DateTime, ForeignKey
+from sqlalchemy.dialects.postgresql import JSONB
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.types import ARRAY
+from datetime import datetime, timezone
+from typing import List, Optional
+
+from goldenverba.components.chunk import Chunk
+from goldenverba.components.document import Document
+from goldenverba.components.types import FileData
+
+import logging
 
 import os
 from pathlib import Path
@@ -12,6 +24,7 @@ from dotenv import load_dotenv
 from starlette.websockets import WebSocketDisconnect
 from wasabi import msg  # type: ignore[import]
 import time
+from pydantic import BaseModel, ConfigDict
 
 from goldenverba import verba_manager
 from goldenverba.server.types import (
@@ -25,14 +38,21 @@ from goldenverba.server.types import (
 )
 from goldenverba.server.util import get_config, set_config, setup_managers
 
-
-
 load_dotenv()
 
 # Configuración de la conexión a la base de datos PgVector
-#def get_vector_db():
-#    db_url = "postgresql+psycopg2://ai:ai@localhost:5532/ai"
-#    return PgVector2(db_url=db_url, collection="my_document_vectors")
+DATABASE_URL = os.getenv("DATABASE_URL")
+engine = create_engine(DATABASE_URL)
+metadata = MetaData()
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+# Definir función para obtener la sesión de la base de datos
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 # Check if runs in production
 production_key = os.environ.get("VERBA_PRODUCTION", "")
@@ -46,8 +66,44 @@ else:
 manager = verba_manager.VerbaManager()
 setup_managers(manager)
 
+
 # FastAPI App
 app = FastAPI()
+
+# Define the documents table
+documents_table = Table(
+    "documents", metadata,
+    Column("id", String, primary_key=True),
+    Column("_name", String, unique=True),  # Añadido unique=True para que pueda ser referenciada
+    Column("_text", Text),
+    Column("_type", String),
+    Column("_path", String),
+    Column("_link", String),
+    Column("_timestamp", String),
+    Column("_reader", String),
+    Column("_meta", JSONB),
+    Column("_score", Integer),
+    Column("_vector", JSONB),
+    Column("created_at", DateTime, default=lambda: datetime.now(timezone.utc)),
+    Column("updated_at", DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc)),
+)
+
+# Define the chunks table
+chunks_table = Table(
+    "chunks", metadata,
+    Column("id", String, primary_key=True),
+    Column("_doc_name", String, ForeignKey("documents._name")),  # Se mantiene la clave foránea
+    Column("_doc_type", String),
+    Column("_doc_uuid", String),
+    Column("_chunk_id", String),
+    Column("_text", Text),
+    Column("_tokens", ARRAY(Integer)),  # Asegúrate de que _tokens pueda manejar arrays grandes
+    Column("created_at", DateTime, default=lambda: datetime.now(timezone.utc)),
+    Column("updated_at", DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc)),
+)
+
+
+metadata.create_all(engine)
 
 origins = [
     "http://localhost:3000",
@@ -75,7 +131,6 @@ app.mount(
 
 # Serve the main page and other static files
 app.mount("/static", StaticFiles(directory=BASE_DIR / "frontend/out"), name="app")
-
 
 @app.get("/")
 @app.head("/")
@@ -231,10 +286,12 @@ async def reset_verba(payload: ResetPayload):
 
     return JSONResponse(status_code=200, content={})
 
+from phi.document.reader.pdf import PDFReader
+
 # Receive query and return chunks and query answer
+# Endpoint para importar datos
 @app.post("/api/import")
 async def import_data(payload: ImportPayload):
-
     logging = []
 
     if production:
@@ -252,12 +309,42 @@ async def import_data(payload: ImportPayload):
         documents, logging = manager.import_data(
             payload.data, payload.textValues, logging
         )
-        # Agregar la integración con PgVector aquí
-        #vector_db = get_vector_db()
-        #for document in documents:
-        #    vector = document.embed()  # Suponiendo que tienes una función para obtener el vector
-        #    vector_db.insert(document.id, vector)  # Asegúrate de que el ID y el vector están correctamente definidos
 
+        # Generar embeddings usando el embedder y almacenar los documentos en PostgreSQL
+        db_session = SessionLocal()
+        for doc in documents:
+            doc_id = doc.get("id") or f"{doc['_name']}_{datetime.now(timezone.utc).isoformat()}"
+            db_session.execute(documents_table.insert().values(
+                id=doc_id,
+                _name=doc["_name"],
+                _text=doc["_text"],
+                _type=doc["_type"],
+                _path=doc["_path"],
+                _link=doc["_link"],
+                _timestamp=doc["_timestamp"],
+                _reader=doc["_reader"],
+                _meta=doc["_meta"],
+                _score=doc["_score"],
+                _vector=doc["_vector"],
+                created_at=datetime.now(timezone.utc),
+                updated_at=datetime.now(timezone.utc)
+            ))
+            for chunk in doc.get("chunks", []):
+                db_session.execute(chunks_table.insert().values(
+                    id=f"{doc_id}_{chunk.get('_chunk_id')}",
+                    _text=chunk.get("_text"),
+                    _doc_name=chunk.get("_doc_name"),
+                    _doc_type=chunk.get("_doc_type"),
+                    _doc_uuid=chunk.get("_doc_uuid"),
+                    _chunk_id=chunk.get("_chunk_id"),
+                    _tokens=chunk.get("_tokens"),  
+                    created_at=datetime.now(timezone.utc),
+                    updated_at=datetime.now(timezone.utc)
+                ))
+        db_session.commit()
+        db_session.close()
+
+        logging.append({"type": "INFO", "message": "Documents and chunks loaded and vectors stored successfully."})
 
         return JSONResponse(
             content={
@@ -272,6 +359,7 @@ async def import_data(payload: ImportPayload):
                 "logging": logging,
             }
         )
+
 
 @app.post("/api/set_config")
 async def update_config(payload: ConfigPayload):
@@ -295,27 +383,52 @@ async def update_config(payload: ConfigPayload):
             "status_msg": "Config Updated",
         }
     )
+  
+def retrieve_chunks(self, queries: list[str]) -> list[Chunk]:
+            chunks, context = self.retriever_manager.retrieve(
+                queries,
+                self.client,
+                self.embedder_manager.embedders[self.embedder_manager.selected_embedder],
+                self.generator_manager.generators[
+                    self.generator_manager.selected_generator
+                ],
+            )
+            return chunks, context     
+# def retrieve_chunks(query: str, embeddings_model: str):
+#     embeddings_model_clean = embeddings_model.replace("-", "_")
+#     collection_name = f"local_rag_documents_{embeddings_model_clean}"
+    
+#     # Conectar a PgVector2
+#     db_url = os.getenv("DATABASE_URL", "postgresql+psycopg://ai:ai@localhost:5532/ai")
+#     vector_db = PgVector2(db_url=db_url, collection=collection_name)
+    
+#     # Realizar la búsqueda en la colección de vectores
+#     results = vector_db.search(query, limit=5)
+    
+#     # Convertir los resultados en chunks de documentos
+#     chunks = []
+#     for result in results:
+#         chunks.append({
+#             "text": result.content,
+#             "doc_name": result.name,
+#             "chunk_id": result.meta_data.get("chunk_id", ""),
+#             "doc_uuid": result.meta_data.get("doc_uuid", ""),
+#             "doc_type": result.meta_data.get("doc_type", ""),
+#             "score": result.meta_data.get("score", 0),
+#         })
+    
+#     return chunks
 
-# Receive query and return chunks and query answer
+    
+# En el método que maneja la consulta, se llamaría a esta función de esta manera:
 @app.post("/api/query")
 async def query(payload: QueryPayload):
     msg.good(f"Received query: {payload.query}")
     start_time = time.time()  # Start timing
     try:
-        chunks, context = manager.retrieve_chunks([payload.query])
-
-        retrieved_chunks = [
-            {
-                "text": chunk.text,
-                "doc_name": chunk.doc_name,
-                "chunk_id": chunk.chunk_id,
-                "doc_uuid": chunk.doc_uuid,
-                "doc_type": chunk.doc_type,
-                "score": chunk.score,
-            }
-            for chunk in chunks
-        ]
-
+        chunks = retrieve_chunks(payload.query, payload.embeddings_model)
+        context = ""  # Dependiendo de cómo manejes el contexto
+        
         elapsed_time = round(time.time() - start_time, 2)  # Calculate elapsed time
         msg.good(f"Succesfully processed query: {payload.query} in {elapsed_time}s")
 
@@ -332,7 +445,7 @@ async def query(payload: QueryPayload):
         return JSONResponse(
             content={
                 "error": "",
-                "chunks": retrieved_chunks,
+                "chunks": chunks,
                 "context": context,
                 "took": elapsed_time,
             }
@@ -342,10 +455,10 @@ async def query(payload: QueryPayload):
         msg.warn(f"Query failed: {str(e)}")
         return JSONResponse(
             content={
-                    "chunks": [],
-                    "took": 0,
-                    "context": "",
-                    "error": f"Something went wrong: {str(e)}",
+                "chunks": [],
+                "took": 0,
+                "context": "",
+                "error": f"Something went wrong: {str(e)}",
             }
         )
 
@@ -488,3 +601,4 @@ async def delete_document(payload: GetDocumentPayload):
 
     manager.delete_document_by_id(payload.document_id)
     return JSONResponse(content={})
+

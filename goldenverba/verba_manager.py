@@ -1,10 +1,12 @@
 import os
 import ssl
+import json
 
 import weaviate
 from dotenv import load_dotenv, find_dotenv
 from wasabi import msg
 from weaviate.embedded import EmbeddedOptions
+from typing import Optional, Dict, Any, List
 
 import goldenverba.components.schema.schema_generation as schema_manager
 
@@ -55,9 +57,34 @@ class VerbaManager:
         for embedding in schema_manager.EMBEDDINGS:
             schema_manager.init_schemas(self.client, embedding, False, True)
 
+    def serialize_object(self, obj):
+        """Recursively serialize an object to a dictionary."""
+        if isinstance(obj, list):
+            return [self.serialize_object(item) for item in obj]
+        elif hasattr(obj, '__dict__'):
+            return {key: self.serialize_object(value) for key, value in obj.__dict__.items()}
+        elif hasattr(obj, '__slots__'):
+            return {slot: self.serialize_object(getattr(obj, slot)) for slot in obj.__slots__}
+        elif isinstance(obj, (int, float, str, bool)) or obj is None:
+            return obj
+        else:
+            return str(obj)  # For objects that can't be directly serialized
+
+    def get_modified_documents_structure(self, modified_documents):
+        """Convert modified documents structure to a dictionary."""
+        documents_structure = []
+        for doc in modified_documents:
+            doc_dict = {
+                attribute: self.serialize_object(getattr(doc, attribute))
+                for attribute in dir(doc)
+                if not attribute.startswith('__') and not callable(getattr(doc, attribute))
+            }
+            documents_structure.append(doc_dict)
+        return documents_structure
+
     def import_data(
-        self, fileData: list[FileData], textValues: list[str], logging: list[dict]
-    ) -> list[Document]:
+            self, fileData: list[FileData], textValues: list[str], logging: list[dict]
+        ) -> list[Dict[str, Any]]:  # Change return type to list of dicts to include embeddings
 
         loaded_documents, logging = self.reader_manager.load(
             fileData, textValues, logging
@@ -71,7 +98,7 @@ class VerbaManager:
                 filtered_documents.append(document)
             else:
                 logging.append(
-                    {"type": "WARNING", "message": f"{document.name} already exists."}
+                    {"type": "WARNING", "message": f"{document._name} already exists."}
                 )
 
         modified_documents, logging = self.chunker_manager.chunk(
@@ -82,7 +109,45 @@ class VerbaManager:
             modified_documents, client=self.client, logging=logging
         )
 
-        return modified_documents, logging
+        # Convert the modified documents structure to a dictionary
+        modified_documents_structure = self.get_modified_documents_structure(modified_documents)
+
+        # Save the structure to a JSON file
+        #with open('modified_documents_structure.json', 'w') as json_file:
+            #json.dump(modified_documents_structure, json_file, indent=4)
+
+        #print("Structure saved to 'modified_documents_structure.json'")
+
+        documents_with_chunks_and_embeddings = []
+
+        for doc in modified_documents:
+            doc_dict = {
+                "_name": getattr(doc, '_name', None),
+                "_text": getattr(doc, '_text', None),
+                "_type": getattr(doc, '_type', None),
+                "_path": getattr(doc, '_path', None),
+                "_link": getattr(doc, '_link', None),
+                "_timestamp": getattr(doc, '_timestamp', None),
+                "_reader": getattr(doc, '_reader', None),
+                "_vector": getattr(doc, '_vector', None),
+                "_meta": getattr(doc, '_meta', None),
+                "_score": getattr(doc, '_score', None),
+                "chunks": [
+                    {
+                        "_chunk_id": str(chunk_id),
+                        "_text": chunk._text,
+                        "_doc_name": chunk._doc_name,
+                        "_doc_type": chunk._doc_type,
+                        "_doc_uuid": chunk._doc_uuid,
+                        "_tokens": chunk._tokens
+                    }
+                    for chunk_id, chunk in enumerate(getattr(doc, 'chunks', []))
+                ]
+            }
+            documents_with_chunks_and_embeddings.append(doc_dict)
+
+        return documents_with_chunks_and_embeddings, logging
+
 
     def reader_set_reader(self, reader: str) -> bool:
         self.reader_manager.set_reader(reader)
@@ -150,6 +215,19 @@ class VerbaManager:
         except Exception:
             self.environment_variables["OPENAI_API_KEY"] = False
 
+        # Configuración para nuevas APIs de funcionalidades
+        try:
+            PG_VECTOR_URL = os.environ.get('PG_VECTOR_URL', "")
+            if PG_VECTOR_URL:
+                self.environment_variables['PG_VECTOR_URL'] = True
+                msg.good(f"PG_VECTOR_URL set: {PG_VECTOR_URL}")
+            else:
+                self.environment_variables['PG_VECTOR_URL'] = False
+                msg.warn('PG_VECTOR_URL not configured, defaulting to local settings')
+        except Exception:
+            self.environment_variables['PG_VECTOR_URL'] = False
+            msg.fail('Failed to configure PG_VECTOR_URL')
+
         cohere_key = os.environ.get("COHERE_API_KEY", "")
         if cohere_key != "":
             additional_header["X-Cohere-Api-Key"] = cohere_key
@@ -163,30 +241,10 @@ class VerbaManager:
 
         google_project = os.environ.get("GOOGLE_CLOUD_PROJECT", "")
 
-        # Check Verba URL ENV
-        weaviate_url = os.environ.get("WEAVIATE_URL_VERBA", "")
-        if weaviate_url != "":
-            weaviate_key = os.environ.get("WEAVIATE_API_KEY_VERBA", "")
-            if weaviate_key != "":
-                self.environment_variables["WEAVIATE_API_KEY_VERBA"] = True
-                auth_config = weaviate.AuthApiKey(api_key=weaviate_key)
-                msg.info("Auth information provided")
-                client = weaviate.Client(
-                    url=weaviate_url,
-                    additional_headers=additional_header,
-                    auth_client_secret=auth_config,
-                )
-            else:
-                msg.info("No Auth information provided")
-                client = weaviate.Client(
-                    url=weaviate_url,
-                    additional_headers=additional_header,
-                )
-            self.environment_variables["WEAVIATE_URL_VERBA"] = True
-            self.weaviate_type = "Weaviate Cluster"
+        use_embedded = os.environ.get("USE_EMBEDDED_WEAVIATE", "false").lower() == "true"
 
-        # Use Weaviate Embedded
-        else:
+        if use_embedded:
+            msg.info("Using Weaviate Embedded")
             try:
                 _create_unverified_https_context = ssl._create_unverified_context
             except AttributeError:
@@ -194,24 +252,52 @@ class VerbaManager:
             else:
                 ssl._create_default_https_context = _create_unverified_https_context
 
-            if google_project != "":
-                additional_env_vars = {
-                    "ENABLE_MODULES": "text2vec-openai,generative-openai,qna-openai,text2vec-cohere,text2vec-palm",
-                    "GOOGLE_CLOUD_PROJECT": google_project,
-                }
-            else:
-                additional_env_vars = {
-                    "ENABLE_MODULES": "text2vec-openai,generative-openai,qna-openai,text2vec-cohere",
-                }
-
-            msg.info("Using Weaviate Embedded")
-            self.weaviate_type = "Weaviate Embedded"
+            additional_env_vars = {
+                "ENABLE_MODULES": "text2vec-openai,generative-openai,qna-openai,text2vec-cohere"
+            }
             client = weaviate.Client(
-                additional_headers=additional_header,
                 embedded_options=EmbeddedOptions(
-                    additional_env_vars=additional_env_vars
+                    persistence_data_path='data/weaviate_data',  # Cambia esta ruta a una ruta en tu sistema local
+                    
                 ),
+                 additional_headers={"X-OpenAI-Api-Key": os.environ.get("OPENAI_API_KEY", "")}
             )
+
+            if google_project:
+                additional_env_vars["GOOGLE_CLOUD_PROJECT"] = google_project
+
+            # client = weaviate.Client(
+            #     embedded_options=EmbeddedOptions(
+            #         persistence_data_path='data/weaviate_data',  # Cambia esta ruta a una ruta en tu sistema local
+            #         additional_env_vars=additional_env_vars,
+            #     ),
+            #     additional_headers=additional_header,
+            # )
+        else:
+            weaviate_url = os.environ.get("WEAVIATE_URL_VERBA", "")
+            if weaviate_url != "":
+                weaviate_key = os.environ.get("WEAVIATE_API_KEY_VERBA", "")
+                if weaviate_key != "":
+                    auth_config = weaviate.AuthApiKey(api_key=weaviate_key)
+                    client = weaviate.Client(
+                    embedded_options=EmbeddedOptions(
+                    persistence_data_path='data/weaviate_data',  # Cambia esta ruta a una ruta en tu sistema local
+                    
+                ),
+                 additional_headers={"X-OpenAI-Api-Key": os.environ.get("OPENAI_API_KEY", "")}
+            )
+                else:
+                  client = weaviate.Client(
+                    embedded_options=EmbeddedOptions(
+                    persistence_data_path='data/weaviate_data',  # Cambia esta ruta a una ruta en tu sistema local
+                    
+                ),
+                 additional_headers={"X-OpenAI-Api-Key": os.environ.get("OPENAI_API_KEY", "")}
+            )
+                self.environment_variables["WEAVIATE_URL_VERBA"] = True
+                self.weaviate_type = "Weaviate Cluster"
+            else:
+                msg.fail("Weaviate URL not set")
 
         if client is not None:
             msg.good("Connected to Weaviate")
@@ -225,7 +311,6 @@ class VerbaManager:
                                 msg.fail(result["result"])
 
             client.batch.configure(callback=batch_callback)
-
         else:
             msg.fail("Connection to Weaviate failed")
 
@@ -388,6 +473,12 @@ class VerbaManager:
                 raise EnvironmentError(
                     "Missing environment variables. When using Azure OpenAI, you need to set OPENAI_BASE_URL, AZURE_OPENAI_RESOURCE_NAME, AZURE_OPENAI_EMBEDDING_MODEL and OPENAI_MODEL. Please check documentation."
                 )
+
+        # PG_VECTOR_URL
+        if os.environ.get("PG_VECTOR_URL", "") != "":
+            self.environment_variables["PG_VECTOR_URL"] = True
+        else:
+            self.environment_variables["PG_VECTOR_URL"] = False
 
     def get_schemas(self) -> dict:
         """
