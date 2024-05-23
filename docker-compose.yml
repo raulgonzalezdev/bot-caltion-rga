@@ -6,7 +6,7 @@ services:
       context: ./
       dockerfile: Dockerfile
     ports:
-      - "8001:8001"
+      - "8000:8000"
     environment:
       - WEAVIATE_URL_VERBA=http://weaviate:8080
       - OPENAI_API_KEY=${OPENAI_API_KEY}
