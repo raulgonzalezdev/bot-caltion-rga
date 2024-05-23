@@ -68,7 +68,7 @@ services:
   postgres:
     image: phidata/pgvector:16
     ports:
-      - "5542:5432"
+      - "5432:5432"
     environment:
       POSTGRES_USER: ai
       POSTGRES_PASSWORD: ai
